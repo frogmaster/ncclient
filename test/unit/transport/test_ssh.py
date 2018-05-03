@@ -26,7 +26,7 @@ reply_ok = """<rpc-reply>
 <rpc-reply/>"""
 
 # A buffer of data with two complete messages and an incomplete message
-rpc_reply = reply_data + "\n]]>]]>\n" + reply_ok + "\n]]>]]>\n" + reply_ok
+rpc_reply = reply_data + "\n]]>]]>\n" + reply_ok + "\n]]>]]>\n" + reply_ok + "\n\r"
 
 reply_ok_chunk = "\n#%d\n%s\n##\n" % (len(reply_ok), reply_ok)
 
@@ -83,7 +83,7 @@ class TestSSH(unittest.TestCase):
     @patch('ncclient.transport.ssh.Session._dispatch_message')
     def test_parse(self, mock_dispatch):
         self._test_parsemethod(mock_dispatch, SSHSession._parse, rpc_reply,
-                               "\n" + reply_ok, [reply_data])
+                               reply_ok, [reply_data])
 
     @patch('ncclient.transport.ssh.Session._dispatch_message')
     def test_parse11(self, mock_dispatch):
