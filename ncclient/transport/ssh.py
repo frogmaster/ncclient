@@ -119,6 +119,7 @@ class SSHSession(Session):
         if MSG_DELIM in buf.read().decode('UTF-8'):
             buf.seek(0)
             msg, _, remaining = buf.read().decode('UTF-8').partition(MSG_DELIM)
+            remaining = remaining.strip('\n\r')
             msg = msg.strip()
             if sys.version < '3':
                 self._dispatch_message(msg.encode())
